@@ -1,0 +1,31 @@
+{
+  "name": "contexto",
+  "private": true,
+  "workspaces": [
+    "apps/frontend",
+    "apps/core-api",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev -w apps/frontend",
+    "dev:api": "npm run start:dev -w apps/core-api",
+    "dev:ai": "cd apps/ai-service && .venv\\Scripts\\python.exe -m uvicorn app.main:app --reload --port 8000",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:api\" \"npm run dev:ai\"",
+    "build:frontend": "npm run build -w apps/frontend",
+    "build:api": "npm run build -w apps/core-api",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "dependencies": {
+    "@nestjs/bullmq": "^11.0.4",
+    "@nestjs/config": "^4.0.4",
+    "@prisma/client": "^7.8.0",
+    "bullmq": "^5.79.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.3",
+    "prisma": "^7.8.0"
+  }
+}

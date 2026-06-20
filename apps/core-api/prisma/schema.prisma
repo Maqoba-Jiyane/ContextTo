@@ -1,0 +1,183 @@
+generator client {
+  provider               = "prisma-client"
+  output                 = "../src/generated/prisma"
+  moduleFormat           = "cjs"
+  generatedFileExtension = "ts"
+  importFileExtension    = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserStatus {
+  ACTIVE
+  DISABLED
+  INVITED
+}
+
+enum OrganizationStatus {
+  ACTIVE
+  SUSPENDED
+  ARCHIVED
+}
+
+enum OrganizationRole {
+  ADMIN
+  MEMBER
+}
+
+enum DocumentIngestionStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+model User {
+  id           String     @id @default(uuid()) @db.Uuid
+  email        String     @unique @db.VarChar(320)
+  name         String?    @db.VarChar(160)
+  passwordHash String?    @map("password_hash")
+  avatarUrl    String?    @map("avatar_url")
+  status       UserStatus @default(ACTIVE)
+
+  memberships       OrganizationMember[]
+  uploadedDocuments Document[]           @relation("UploadedDocuments")
+  createdWorkspaces Workspace[]          @relation("CreatedWorkspaces")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([email])
+  @@index([status])
+  @@map("users")
+}
+
+model Organization {
+  id     String             @id @default(uuid()) @db.Uuid
+  name   String             @db.VarChar(180)
+  slug   String             @unique @db.VarChar(120)
+  status OrganizationStatus @default(ACTIVE)
+
+  members    OrganizationMember[]
+  workspaces Workspace[]
+  documents  Document[]
+  documentChunks DocumentChunk[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([status])
+  @@map("organizations")
+}
+
+model OrganizationMember {
+  id             String           @id @default(uuid()) @db.Uuid
+  organizationId String           @map("organization_id") @db.Uuid
+  userId         String           @map("user_id") @db.Uuid
+  role           OrganizationRole @default(MEMBER)
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+  @@index([organizationId, role])
+  @@map("organization_members")
+}
+
+model Workspace {
+  id              String  @id @default(uuid()) @db.Uuid
+  organizationId  String  @map("organization_id") @db.Uuid
+  parentId        String? @map("parent_id") @db.Uuid
+  createdByUserId String? @map("created_by_user_id") @db.Uuid
+
+  name        String  @db.VarChar(180)
+  slug        String  @db.VarChar(140)
+  description String? @db.Text
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  parent       Workspace?   @relation("WorkspaceHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  children     Workspace[]  @relation("WorkspaceHierarchy")
+
+  createdBy User?      @relation("CreatedWorkspaces", fields: [createdByUserId], references: [id], onDelete: SetNull)
+  documents Document[]
+
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  archivedAt DateTime? @map("archived_at")
+
+  @@unique([organizationId, slug])
+  @@index([organizationId])
+  @@index([organizationId, parentId])
+  @@map("workspaces")
+}
+
+model Document {
+  id               String @id @default(uuid()) @db.Uuid
+  organizationId   String @map("organization_id") @db.Uuid
+  workspaceId      String? @map("workspace_id") @db.Uuid
+  uploadedByUserId String @map("uploaded_by_user_id") @db.Uuid
+
+  originalFileName String  @map("original_file_name") @db.VarChar(260)
+  storageUrl       String? @map("storage_url") @db.Text
+  mimeType         String? @map("mime_type") @db.VarChar(120)
+  sizeBytes        Int?    @map("size_bytes")
+  checksumSha256   String? @map("checksum_sha256") @db.VarChar(64)
+
+  ingestionStatus      DocumentIngestionStatus @default(PENDING) @map("ingestion_status")
+  ingestionJobId       String? @map("ingestion_job_id") @db.VarChar(180)
+  ingestionStartedAt   DateTime? @map("ingestion_started_at")
+  ingestionCompletedAt DateTime? @map("ingestion_completed_at")
+  ingestionFailedAt    DateTime? @map("ingestion_failed_at")
+  ingestionError       String? @map("ingestion_error") @db.Text
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  workspace    Workspace?   @relation(fields: [workspaceId], references: [id], onDelete: Restrict)
+  uploadedBy   User        @relation("UploadedDocuments", fields: [uploadedByUserId], references: [id], onDelete: Restrict)
+  
+  chunks DocumentChunk[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@index([organizationId])
+  @@index([workspaceId])
+  @@index([uploadedByUserId])
+  @@index([organizationId, ingestionStatus, createdAt])
+  @@index([organizationId, workspaceId, createdAt])
+  @@index([checksumSha256])
+  @@map("documents")
+}
+
+model DocumentChunk {
+  id             String @id @default(uuid()) @db.Uuid
+  organizationId String @map("organization_id") @db.Uuid
+  documentId     String @map("document_id") @db.Uuid
+
+  chunkIndex Int    @map("chunk_index")
+  content    String @db.Text
+
+  tokenCount Int? @map("token_count")
+  metadata   Json?
+
+  embedding Unsupported("vector(384)")?
+
+  document     Document     @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([documentId, chunkIndex])
+  @@index([organizationId])
+  @@index([documentId])
+  @@index([organizationId, documentId])
+  @@map("document_chunks")
+}

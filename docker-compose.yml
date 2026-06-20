@@ -1,0 +1,38 @@
+services:
+  # 1. PostgreSQL Database with pgvector extension
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: contexto-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres_local_pass_2026}
+      POSTGRES_DB: ${DB_NAME:-contexto_dev}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - contexto-network
+    restart: always
+
+  # 2. Redis for BullMQ backgrounds jobs and queues
+  redis:
+    image: redis:7-alpine
+    container_name: contexto-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - contexto-network
+    restart: always
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  contexto-network:
+    driver: bridge
