@@ -161,10 +161,10 @@ npm run dev:frontend
 Create a `.env` file in the root project folder:
 ```env
 # Database Configuration
-POSTGRES_USER=contexto
-POSTGRES_PASSWORD=contexto_password
-POSTGRES_DB=contexto_db
-DATABASE_URL="postgresql://contexto:contexto_password@localhost:5432/contexto_db?schema=public"
+POSTGRES_USER=postgress
+POSTGRES_PASSWORD=postgres_local_pass_2026
+POSTGRES_DB=contexto_dev
+DATABASE_URL="postgresql://contexto:postgres_local_pass_2026@localhost:5432/contexto_dev?schema=public"
 
 # Redis Configuration
 REDIS_HOST=localhost
