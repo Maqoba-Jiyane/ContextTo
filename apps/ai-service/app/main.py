@@ -50,7 +50,34 @@ class IngestDocumentResponse(BaseModel):
     status: str
     chunksCreated: int
     chunks: list[ExtractedChunk]
+    
+class EmbedQueryRequest(BaseModel):
+    query: str
 
+
+class EmbedQueryResponse(BaseModel):
+    embedding: list[float]
+    dimensions: int
+    
+@app.post("/embed/query", response_model=EmbedQueryResponse)
+async def embed_query(payload: EmbedQueryRequest) -> EmbedQueryResponse:
+    query = payload.query.strip()
+
+    if not query:
+        raise HTTPException(status_code=400, detail="Query is required.")
+
+    embedding = embedding_model.encode(
+        query,
+        normalize_embeddings=True,
+        show_progress_bar=False,
+    )
+
+    embedding_list = [float(value) for value in embedding.tolist()]
+
+    return EmbedQueryResponse(
+        embedding=embedding_list,
+        dimensions=len(embedding_list),
+    )
 
 @app.get("/")
 async def root() -> dict[str, str]:

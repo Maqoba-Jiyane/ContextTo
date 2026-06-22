@@ -25,13 +25,6 @@ interface AiExtractedChunk {
   metadata: Prisma.InputJsonValue;
 }
 
-interface AiExtractedChunk {
-  chunkIndex: number;
-  content: string;
-  tokenCount: number;
-  metadata: Prisma.InputJsonValue;
-}
-
 interface AiIngestDocumentResponse {
   documentId: string;
   organizationId: string;
@@ -139,6 +132,7 @@ export class DocumentIngestionProcessor extends WorkerHost {
           data: {
             ingestionStatus: DocumentIngestionStatus.COMPLETED,
             ingestionCompletedAt: new Date(),
+            ingestionFailedAt: null,
             ingestionError: null,
           },
         });
