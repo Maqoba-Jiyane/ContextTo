@@ -114,6 +114,13 @@ export default function DocumentsPage() {
           </p>
         </section>
 
+        <Link
+          href="/dashboard/search"
+          className="mt-4 inline-block rounded-xl border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 transition hover:bg-slate-800"
+        >
+          Open semantic search
+        </Link>
+
         {!configIsReady && (
           <div className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4 text-sm text-yellow-200">
             Missing demo environment variables. Add your seeded IDs to{" "}
