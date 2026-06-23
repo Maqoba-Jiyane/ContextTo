@@ -4,6 +4,7 @@ import { PrismaModule } from './database/prisma.module';
 import { HealthController } from './health/health.controller';
 import { DocumentsModule } from './modules/documents/documents.module';
 import { SearchModule } from './modules/search/search.module';
+import { RagModule } from './modules/rag/rag.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { SearchModule } from './modules/search/search.module';
     PrismaModule,
     DocumentsModule,
     SearchModule,
+    RagModule,
   ],
   controllers: [HealthController],
   providers: [],

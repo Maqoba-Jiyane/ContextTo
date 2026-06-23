@@ -59,6 +59,121 @@ class EmbedQueryResponse(BaseModel):
     embedding: list[float]
     dimensions: int
     
+class AnswerContext(BaseModel):
+    chunkId: str
+    documentId: str
+    originalFileName: str
+    chunkIndex: int
+    content: str
+    score: float
+
+
+class AnswerRequest(BaseModel):
+    query: str
+    contexts: list[AnswerContext]
+
+
+class AnswerCitation(BaseModel):
+    chunkId: str
+    documentId: str
+    originalFileName: str
+    chunkIndex: int
+    score: float
+
+
+class AnswerResponse(BaseModel):
+    answer: str
+    citations: list[AnswerCitation]
+    
+@app.post("/answer", response_model=AnswerResponse)
+async def answer_question(payload: AnswerRequest) -> AnswerResponse:
+    query = payload.query.strip()
+
+    if not query:
+        raise HTTPException(status_code=400, detail="Query is required.")
+
+    if not payload.contexts:
+        return AnswerResponse(
+            answer="I could not find relevant information in the uploaded documents.",
+            citations=[],
+        )
+
+    selected_contexts = payload.contexts[:5]
+
+    sentences: list[tuple[str, AnswerContext]] = []
+
+    for context in selected_contexts:
+        for sentence in split_into_sentences(context.content):
+            cleaned = sentence.strip()
+
+            if len(cleaned.split()) >= 8:
+                sentences.append((cleaned, context))
+
+    if not sentences:
+        return AnswerResponse(
+            answer="I found relevant document chunks, but could not extract a clear answer from them.",
+            citations=[
+                AnswerCitation(
+                    chunkId=context.chunkId,
+                    documentId=context.documentId,
+                    originalFileName=context.originalFileName,
+                    chunkIndex=context.chunkIndex,
+                    score=context.score,
+                )
+                for context in selected_contexts[:3]
+            ],
+        )
+
+    query_embedding = embedding_model.encode(
+        query,
+        normalize_embeddings=True,
+        show_progress_bar=False,
+    )
+
+    sentence_texts = [sentence for sentence, _context in sentences]
+
+    sentence_embeddings = embedding_model.encode(
+        sentence_texts,
+        normalize_embeddings=True,
+        show_progress_bar=False,
+    )
+
+    scored_sentences: list[tuple[float, str, AnswerContext]] = []
+
+    for sentence, context, sentence_embedding in zip(
+        sentence_texts,
+        [context for _sentence, context in sentences],
+        sentence_embeddings,
+    ):
+        similarity = float(query_embedding @ sentence_embedding)
+        scored_sentences.append((similarity, sentence, context))
+
+    scored_sentences.sort(key=lambda item: item[0], reverse=True)
+
+    top_sentences = scored_sentences[:4]
+
+    answer_lines = [
+        sentence for _similarity, sentence, _context in top_sentences
+    ]
+
+    unique_citations: dict[str, AnswerCitation] = {}
+
+    for _similarity, _sentence, context in top_sentences:
+        unique_citations[context.chunkId] = AnswerCitation(
+            chunkId=context.chunkId,
+            documentId=context.documentId,
+            originalFileName=context.originalFileName,
+            chunkIndex=context.chunkIndex,
+            score=context.score,
+        )
+
+    answer = " ".join(answer_lines)
+
+    return AnswerResponse(
+        answer=answer,
+        citations=list(unique_citations.values()),
+    )
+    
 @app.post("/embed/query", response_model=EmbedQueryResponse)
 async def embed_query(payload: EmbedQueryRequest) -> EmbedQueryResponse:
     query = payload.query.strip()
@@ -305,3 +420,29 @@ def add_embeddings_to_chunks(chunks: list[dict[str, Any]]) -> list[ExtractedChun
 
 def estimate_token_count(text: str) -> int:
     return max(1, int(len(text.split()) * 1.3))
+
+def split_into_sentences(text: str) -> list[str]:
+    normalized = text.replace("\n", " ").strip()
+
+    if not normalized:
+        return []
+
+    sentence_endings = [". ", "? ", "! "]
+    sentences: list[str] = []
+    current = ""
+
+    index = 0
+
+    while index < len(normalized):
+        current += normalized[index]
+
+        if any(current.endswith(ending) for ending in sentence_endings):
+            sentences.append(current.strip())
+            current = ""
+
+        index += 1
+
+    if current.strip:
+        sentences.append(current.strip())
+
+    return sentences
