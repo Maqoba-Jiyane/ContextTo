@@ -120,6 +120,12 @@ export default function DocumentsPage() {
         >
           Open semantic search
         </Link>
+        <Link
+          href="/dashboard/ask"
+          className="mt-4 inline-block rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-500"
+        >
+          Ask knowledge base
+        </Link>
 
         {!configIsReady && (
           <div className="rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4 text-sm text-yellow-200">
