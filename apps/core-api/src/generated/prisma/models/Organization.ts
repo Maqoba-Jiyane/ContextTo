@@ -202,6 +202,7 @@ export type OrganizationWhereInput = {
   workspaces?: Prisma.WorkspaceListRelationFilter
   documents?: Prisma.DocumentListRelationFilter
   documentChunks?: Prisma.DocumentChunkListRelationFilter
+  ragAskLogs?: Prisma.RagAskLogListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -216,6 +217,7 @@ export type OrganizationOrderByWithRelationInput = {
   workspaces?: Prisma.WorkspaceOrderByRelationAggregateInput
   documents?: Prisma.DocumentOrderByRelationAggregateInput
   documentChunks?: Prisma.DocumentChunkOrderByRelationAggregateInput
+  ragAskLogs?: Prisma.RagAskLogOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -233,6 +235,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   workspaces?: Prisma.WorkspaceListRelationFilter
   documents?: Prisma.DocumentListRelationFilter
   documentChunks?: Prisma.DocumentChunkListRelationFilter
+  ragAskLogs?: Prisma.RagAskLogListRelationFilter
 }, "id" | "slug">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -273,6 +276,7 @@ export type OrganizationCreateInput = {
   workspaces?: Prisma.WorkspaceCreateNestedManyWithoutOrganizationInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOrganizationInput
   documentChunks?: Prisma.DocumentChunkCreateNestedManyWithoutOrganizationInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -287,6 +291,7 @@ export type OrganizationUncheckedCreateInput = {
   workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutOrganizationInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOrganizationInput
   documentChunks?: Prisma.DocumentChunkUncheckedCreateNestedManyWithoutOrganizationInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -301,6 +306,7 @@ export type OrganizationUpdateInput = {
   workspaces?: Prisma.WorkspaceUpdateManyWithoutOrganizationNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOrganizationNestedInput
   documentChunks?: Prisma.DocumentChunkUpdateManyWithoutOrganizationNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -315,6 +321,7 @@ export type OrganizationUncheckedUpdateInput = {
   workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutOrganizationNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOrganizationNestedInput
   documentChunks?: Prisma.DocumentChunkUncheckedUpdateManyWithoutOrganizationNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -442,6 +449,20 @@ export type OrganizationUpdateOneRequiredWithoutDocumentChunksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutDocumentChunksInput, Prisma.OrganizationUpdateWithoutDocumentChunksInput>, Prisma.OrganizationUncheckedUpdateWithoutDocumentChunksInput>
 }
 
+export type OrganizationCreateNestedOneWithoutRagAskLogsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutRagAskLogsInput, Prisma.OrganizationUncheckedCreateWithoutRagAskLogsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutRagAskLogsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutRagAskLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutRagAskLogsInput, Prisma.OrganizationUncheckedCreateWithoutRagAskLogsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutRagAskLogsInput
+  upsert?: Prisma.OrganizationUpsertWithoutRagAskLogsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutRagAskLogsInput, Prisma.OrganizationUpdateWithoutRagAskLogsInput>, Prisma.OrganizationUncheckedUpdateWithoutRagAskLogsInput>
+}
+
 export type OrganizationCreateWithoutMembersInput = {
   id?: string
   name: string
@@ -453,6 +474,7 @@ export type OrganizationCreateWithoutMembersInput = {
   workspaces?: Prisma.WorkspaceCreateNestedManyWithoutOrganizationInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOrganizationInput
   documentChunks?: Prisma.DocumentChunkCreateNestedManyWithoutOrganizationInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutMembersInput = {
@@ -466,6 +488,7 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutOrganizationInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOrganizationInput
   documentChunks?: Prisma.DocumentChunkUncheckedCreateNestedManyWithoutOrganizationInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutMembersInput = {
@@ -495,6 +518,7 @@ export type OrganizationUpdateWithoutMembersInput = {
   workspaces?: Prisma.WorkspaceUpdateManyWithoutOrganizationNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOrganizationNestedInput
   documentChunks?: Prisma.DocumentChunkUpdateManyWithoutOrganizationNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutMembersInput = {
@@ -508,6 +532,7 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutOrganizationNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOrganizationNestedInput
   documentChunks?: Prisma.DocumentChunkUncheckedUpdateManyWithoutOrganizationNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutWorkspacesInput = {
@@ -521,6 +546,7 @@ export type OrganizationCreateWithoutWorkspacesInput = {
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOrganizationInput
   documentChunks?: Prisma.DocumentChunkCreateNestedManyWithoutOrganizationInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutWorkspacesInput = {
@@ -534,6 +560,7 @@ export type OrganizationUncheckedCreateWithoutWorkspacesInput = {
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOrganizationInput
   documentChunks?: Prisma.DocumentChunkUncheckedCreateNestedManyWithoutOrganizationInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutWorkspacesInput = {
@@ -563,6 +590,7 @@ export type OrganizationUpdateWithoutWorkspacesInput = {
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOrganizationNestedInput
   documentChunks?: Prisma.DocumentChunkUpdateManyWithoutOrganizationNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutWorkspacesInput = {
@@ -576,6 +604,7 @@ export type OrganizationUncheckedUpdateWithoutWorkspacesInput = {
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOrganizationNestedInput
   documentChunks?: Prisma.DocumentChunkUncheckedUpdateManyWithoutOrganizationNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutDocumentsInput = {
@@ -589,6 +618,7 @@ export type OrganizationCreateWithoutDocumentsInput = {
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   workspaces?: Prisma.WorkspaceCreateNestedManyWithoutOrganizationInput
   documentChunks?: Prisma.DocumentChunkCreateNestedManyWithoutOrganizationInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutDocumentsInput = {
@@ -602,6 +632,7 @@ export type OrganizationUncheckedCreateWithoutDocumentsInput = {
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutOrganizationInput
   documentChunks?: Prisma.DocumentChunkUncheckedCreateNestedManyWithoutOrganizationInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutDocumentsInput = {
@@ -631,6 +662,7 @@ export type OrganizationUpdateWithoutDocumentsInput = {
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   workspaces?: Prisma.WorkspaceUpdateManyWithoutOrganizationNestedInput
   documentChunks?: Prisma.DocumentChunkUpdateManyWithoutOrganizationNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutDocumentsInput = {
@@ -644,6 +676,7 @@ export type OrganizationUncheckedUpdateWithoutDocumentsInput = {
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutOrganizationNestedInput
   documentChunks?: Prisma.DocumentChunkUncheckedUpdateManyWithoutOrganizationNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutDocumentChunksInput = {
@@ -657,6 +690,7 @@ export type OrganizationCreateWithoutDocumentChunksInput = {
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   workspaces?: Prisma.WorkspaceCreateNestedManyWithoutOrganizationInput
   documents?: Prisma.DocumentCreateNestedManyWithoutOrganizationInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutDocumentChunksInput = {
@@ -670,6 +704,7 @@ export type OrganizationUncheckedCreateWithoutDocumentChunksInput = {
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutOrganizationInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOrganizationInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutDocumentChunksInput = {
@@ -699,6 +734,7 @@ export type OrganizationUpdateWithoutDocumentChunksInput = {
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   workspaces?: Prisma.WorkspaceUpdateManyWithoutOrganizationNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutOrganizationNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutDocumentChunksInput = {
@@ -712,6 +748,79 @@ export type OrganizationUncheckedUpdateWithoutDocumentChunksInput = {
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutOrganizationNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutOrganizationNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutRagAskLogsInput = {
+  id?: string
+  name: string
+  slug: string
+  status?: $Enums.OrganizationStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
+  workspaces?: Prisma.WorkspaceCreateNestedManyWithoutOrganizationInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutOrganizationInput
+  documentChunks?: Prisma.DocumentChunkCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutRagAskLogsInput = {
+  id?: string
+  name: string
+  slug: string
+  status?: $Enums.OrganizationStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+  workspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutOrganizationInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutOrganizationInput
+  documentChunks?: Prisma.DocumentChunkUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutRagAskLogsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutRagAskLogsInput, Prisma.OrganizationUncheckedCreateWithoutRagAskLogsInput>
+}
+
+export type OrganizationUpsertWithoutRagAskLogsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutRagAskLogsInput, Prisma.OrganizationUncheckedUpdateWithoutRagAskLogsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutRagAskLogsInput, Prisma.OrganizationUncheckedCreateWithoutRagAskLogsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutRagAskLogsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutRagAskLogsInput, Prisma.OrganizationUncheckedUpdateWithoutRagAskLogsInput>
+}
+
+export type OrganizationUpdateWithoutRagAskLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+  workspaces?: Prisma.WorkspaceUpdateManyWithoutOrganizationNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutOrganizationNestedInput
+  documentChunks?: Prisma.DocumentChunkUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutRagAskLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumOrganizationStatusFieldUpdateOperationsInput | $Enums.OrganizationStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+  workspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutOrganizationNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutOrganizationNestedInput
+  documentChunks?: Prisma.DocumentChunkUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 
@@ -724,6 +833,7 @@ export type OrganizationCountOutputType = {
   workspaces: number
   documents: number
   documentChunks: number
+  ragAskLogs: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -731,6 +841,7 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   workspaces?: boolean | OrganizationCountOutputTypeCountWorkspacesArgs
   documents?: boolean | OrganizationCountOutputTypeCountDocumentsArgs
   documentChunks?: boolean | OrganizationCountOutputTypeCountDocumentChunksArgs
+  ragAskLogs?: boolean | OrganizationCountOutputTypeCountRagAskLogsArgs
 }
 
 /**
@@ -771,6 +882,13 @@ export type OrganizationCountOutputTypeCountDocumentChunksArgs<ExtArgs extends r
   where?: Prisma.DocumentChunkWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountRagAskLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RagAskLogWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -784,6 +902,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   workspaces?: boolean | Prisma.Organization$workspacesArgs<ExtArgs>
   documents?: boolean | Prisma.Organization$documentsArgs<ExtArgs>
   documentChunks?: boolean | Prisma.Organization$documentChunksArgs<ExtArgs>
+  ragAskLogs?: boolean | Prisma.Organization$ragAskLogsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -823,6 +942,7 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   workspaces?: boolean | Prisma.Organization$workspacesArgs<ExtArgs>
   documents?: boolean | Prisma.Organization$documentsArgs<ExtArgs>
   documentChunks?: boolean | Prisma.Organization$documentChunksArgs<ExtArgs>
+  ragAskLogs?: boolean | Prisma.Organization$ragAskLogsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -835,6 +955,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     workspaces: Prisma.$WorkspacePayload<ExtArgs>[]
     documents: Prisma.$DocumentPayload<ExtArgs>[]
     documentChunks: Prisma.$DocumentChunkPayload<ExtArgs>[]
+    ragAskLogs: Prisma.$RagAskLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1242,6 +1363,7 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   workspaces<T extends Prisma.Organization$workspacesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$workspacesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   documents<T extends Prisma.Organization$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   documentChunks<T extends Prisma.Organization$documentChunksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$documentChunksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentChunkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ragAskLogs<T extends Prisma.Organization$ragAskLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$ragAskLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RagAskLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1764,6 +1886,30 @@ export type Organization$documentChunksArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.DocumentChunkScalarFieldEnum | Prisma.DocumentChunkScalarFieldEnum[]
+}
+
+/**
+ * Organization.ragAskLogs
+ */
+export type Organization$ragAskLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RagAskLog
+   */
+  select?: Prisma.RagAskLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RagAskLog
+   */
+  omit?: Prisma.RagAskLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RagAskLogInclude<ExtArgs> | null
+  where?: Prisma.RagAskLogWhereInput
+  orderBy?: Prisma.RagAskLogOrderByWithRelationInput | Prisma.RagAskLogOrderByWithRelationInput[]
+  cursor?: Prisma.RagAskLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RagAskLogScalarFieldEnum | Prisma.RagAskLogScalarFieldEnum[]
 }
 
 /**

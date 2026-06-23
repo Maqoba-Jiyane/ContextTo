@@ -217,6 +217,7 @@ export type UserWhereInput = {
   memberships?: Prisma.OrganizationMemberListRelationFilter
   uploadedDocuments?: Prisma.DocumentListRelationFilter
   createdWorkspaces?: Prisma.WorkspaceListRelationFilter
+  ragAskLogs?: Prisma.RagAskLogListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -232,6 +233,7 @@ export type UserOrderByWithRelationInput = {
   memberships?: Prisma.OrganizationMemberOrderByRelationAggregateInput
   uploadedDocuments?: Prisma.DocumentOrderByRelationAggregateInput
   createdWorkspaces?: Prisma.WorkspaceOrderByRelationAggregateInput
+  ragAskLogs?: Prisma.RagAskLogOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -250,6 +252,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   memberships?: Prisma.OrganizationMemberListRelationFilter
   uploadedDocuments?: Prisma.DocumentListRelationFilter
   createdWorkspaces?: Prisma.WorkspaceListRelationFilter
+  ragAskLogs?: Prisma.RagAskLogListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -295,6 +298,7 @@ export type UserCreateInput = {
   memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   uploadedDocuments?: Prisma.DocumentCreateNestedManyWithoutUploadedByInput
   createdWorkspaces?: Prisma.WorkspaceCreateNestedManyWithoutCreatedByInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutAskedByUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -310,6 +314,7 @@ export type UserUncheckedCreateInput = {
   memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   uploadedDocuments?: Prisma.DocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdWorkspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutCreatedByInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutAskedByUserInput
 }
 
 export type UserUpdateInput = {
@@ -325,6 +330,7 @@ export type UserUpdateInput = {
   memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   uploadedDocuments?: Prisma.DocumentUpdateManyWithoutUploadedByNestedInput
   createdWorkspaces?: Prisma.WorkspaceUpdateManyWithoutCreatedByNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutAskedByUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -340,6 +346,7 @@ export type UserUncheckedUpdateInput = {
   memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   uploadedDocuments?: Prisma.DocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdWorkspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutCreatedByNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutAskedByUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -488,6 +495,20 @@ export type UserUpdateOneRequiredWithoutUploadedDocumentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUploadedDocumentsInput, Prisma.UserUpdateWithoutUploadedDocumentsInput>, Prisma.UserUncheckedUpdateWithoutUploadedDocumentsInput>
 }
 
+export type UserCreateNestedOneWithoutRagAskLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRagAskLogsInput, Prisma.UserUncheckedCreateWithoutRagAskLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRagAskLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutRagAskLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRagAskLogsInput, Prisma.UserUncheckedCreateWithoutRagAskLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRagAskLogsInput
+  upsert?: Prisma.UserUpsertWithoutRagAskLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRagAskLogsInput, Prisma.UserUpdateWithoutRagAskLogsInput>, Prisma.UserUncheckedUpdateWithoutRagAskLogsInput>
+}
+
 export type UserCreateWithoutMembershipsInput = {
   id?: string
   email: string
@@ -500,6 +521,7 @@ export type UserCreateWithoutMembershipsInput = {
   deletedAt?: Date | string | null
   uploadedDocuments?: Prisma.DocumentCreateNestedManyWithoutUploadedByInput
   createdWorkspaces?: Prisma.WorkspaceCreateNestedManyWithoutCreatedByInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutAskedByUserInput
 }
 
 export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -514,6 +536,7 @@ export type UserUncheckedCreateWithoutMembershipsInput = {
   deletedAt?: Date | string | null
   uploadedDocuments?: Prisma.DocumentUncheckedCreateNestedManyWithoutUploadedByInput
   createdWorkspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutCreatedByInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutAskedByUserInput
 }
 
 export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -544,6 +567,7 @@ export type UserUpdateWithoutMembershipsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   uploadedDocuments?: Prisma.DocumentUpdateManyWithoutUploadedByNestedInput
   createdWorkspaces?: Prisma.WorkspaceUpdateManyWithoutCreatedByNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutAskedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -558,6 +582,7 @@ export type UserUncheckedUpdateWithoutMembershipsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   uploadedDocuments?: Prisma.DocumentUncheckedUpdateManyWithoutUploadedByNestedInput
   createdWorkspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutCreatedByNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutAskedByUserNestedInput
 }
 
 export type UserCreateWithoutCreatedWorkspacesInput = {
@@ -572,6 +597,7 @@ export type UserCreateWithoutCreatedWorkspacesInput = {
   deletedAt?: Date | string | null
   memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   uploadedDocuments?: Prisma.DocumentCreateNestedManyWithoutUploadedByInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutAskedByUserInput
 }
 
 export type UserUncheckedCreateWithoutCreatedWorkspacesInput = {
@@ -586,6 +612,7 @@ export type UserUncheckedCreateWithoutCreatedWorkspacesInput = {
   deletedAt?: Date | string | null
   memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   uploadedDocuments?: Prisma.DocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutAskedByUserInput
 }
 
 export type UserCreateOrConnectWithoutCreatedWorkspacesInput = {
@@ -616,6 +643,7 @@ export type UserUpdateWithoutCreatedWorkspacesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   uploadedDocuments?: Prisma.DocumentUpdateManyWithoutUploadedByNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutAskedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreatedWorkspacesInput = {
@@ -630,6 +658,7 @@ export type UserUncheckedUpdateWithoutCreatedWorkspacesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   uploadedDocuments?: Prisma.DocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutAskedByUserNestedInput
 }
 
 export type UserCreateWithoutUploadedDocumentsInput = {
@@ -644,6 +673,7 @@ export type UserCreateWithoutUploadedDocumentsInput = {
   deletedAt?: Date | string | null
   memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   createdWorkspaces?: Prisma.WorkspaceCreateNestedManyWithoutCreatedByInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutAskedByUserInput
 }
 
 export type UserUncheckedCreateWithoutUploadedDocumentsInput = {
@@ -658,6 +688,7 @@ export type UserUncheckedCreateWithoutUploadedDocumentsInput = {
   deletedAt?: Date | string | null
   memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   createdWorkspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutCreatedByInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutAskedByUserInput
 }
 
 export type UserCreateOrConnectWithoutUploadedDocumentsInput = {
@@ -688,6 +719,7 @@ export type UserUpdateWithoutUploadedDocumentsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   createdWorkspaces?: Prisma.WorkspaceUpdateManyWithoutCreatedByNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutAskedByUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUploadedDocumentsInput = {
@@ -702,6 +734,83 @@ export type UserUncheckedUpdateWithoutUploadedDocumentsInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   createdWorkspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutCreatedByNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutAskedByUserNestedInput
+}
+
+export type UserCreateWithoutRagAskLogsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash?: string | null
+  avatarUrl?: string | null
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  uploadedDocuments?: Prisma.DocumentCreateNestedManyWithoutUploadedByInput
+  createdWorkspaces?: Prisma.WorkspaceCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutRagAskLogsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  passwordHash?: string | null
+  avatarUrl?: string | null
+  status?: $Enums.UserStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  uploadedDocuments?: Prisma.DocumentUncheckedCreateNestedManyWithoutUploadedByInput
+  createdWorkspaces?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutRagAskLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRagAskLogsInput, Prisma.UserUncheckedCreateWithoutRagAskLogsInput>
+}
+
+export type UserUpsertWithoutRagAskLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRagAskLogsInput, Prisma.UserUncheckedUpdateWithoutRagAskLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRagAskLogsInput, Prisma.UserUncheckedCreateWithoutRagAskLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRagAskLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRagAskLogsInput, Prisma.UserUncheckedUpdateWithoutRagAskLogsInput>
+}
+
+export type UserUpdateWithoutRagAskLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  uploadedDocuments?: Prisma.DocumentUpdateManyWithoutUploadedByNestedInput
+  createdWorkspaces?: Prisma.WorkspaceUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRagAskLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  uploadedDocuments?: Prisma.DocumentUncheckedUpdateManyWithoutUploadedByNestedInput
+  createdWorkspaces?: Prisma.WorkspaceUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 
@@ -713,12 +822,14 @@ export type UserCountOutputType = {
   memberships: number
   uploadedDocuments: number
   createdWorkspaces: number
+  ragAskLogs: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | UserCountOutputTypeCountMembershipsArgs
   uploadedDocuments?: boolean | UserCountOutputTypeCountUploadedDocumentsArgs
   createdWorkspaces?: boolean | UserCountOutputTypeCountCreatedWorkspacesArgs
+  ragAskLogs?: boolean | UserCountOutputTypeCountRagAskLogsArgs
 }
 
 /**
@@ -752,6 +863,13 @@ export type UserCountOutputTypeCountCreatedWorkspacesArgs<ExtArgs extends runtim
   where?: Prisma.WorkspaceWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRagAskLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RagAskLogWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -766,6 +884,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   memberships?: boolean | Prisma.User$membershipsArgs<ExtArgs>
   uploadedDocuments?: boolean | Prisma.User$uploadedDocumentsArgs<ExtArgs>
   createdWorkspaces?: boolean | Prisma.User$createdWorkspacesArgs<ExtArgs>
+  ragAskLogs?: boolean | Prisma.User$ragAskLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -810,6 +929,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   memberships?: boolean | Prisma.User$membershipsArgs<ExtArgs>
   uploadedDocuments?: boolean | Prisma.User$uploadedDocumentsArgs<ExtArgs>
   createdWorkspaces?: boolean | Prisma.User$createdWorkspacesArgs<ExtArgs>
+  ragAskLogs?: boolean | Prisma.User$ragAskLogsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -821,6 +941,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     memberships: Prisma.$OrganizationMemberPayload<ExtArgs>[]
     uploadedDocuments: Prisma.$DocumentPayload<ExtArgs>[]
     createdWorkspaces: Prisma.$WorkspacePayload<ExtArgs>[]
+    ragAskLogs: Prisma.$RagAskLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1229,6 +1350,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   memberships<T extends Prisma.User$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   uploadedDocuments<T extends Prisma.User$uploadedDocumentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$uploadedDocumentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdWorkspaces<T extends Prisma.User$createdWorkspacesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$createdWorkspacesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ragAskLogs<T extends Prisma.User$ragAskLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ragAskLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RagAskLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1729,6 +1851,30 @@ export type User$createdWorkspacesArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.WorkspaceScalarFieldEnum | Prisma.WorkspaceScalarFieldEnum[]
+}
+
+/**
+ * User.ragAskLogs
+ */
+export type User$ragAskLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RagAskLog
+   */
+  select?: Prisma.RagAskLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RagAskLog
+   */
+  omit?: Prisma.RagAskLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RagAskLogInclude<ExtArgs> | null
+  where?: Prisma.RagAskLogWhereInput
+  orderBy?: Prisma.RagAskLogOrderByWithRelationInput | Prisma.RagAskLogOrderByWithRelationInput[]
+  cursor?: Prisma.RagAskLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RagAskLogScalarFieldEnum | Prisma.RagAskLogScalarFieldEnum[]
 }
 
 /**

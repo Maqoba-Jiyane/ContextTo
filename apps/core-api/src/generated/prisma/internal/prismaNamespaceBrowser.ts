@@ -56,7 +56,8 @@ export const ModelName = {
   OrganizationMember: 'OrganizationMember',
   Workspace: 'Workspace',
   Document: 'Document',
-  DocumentChunk: 'DocumentChunk'
+  DocumentChunk: 'DocumentChunk',
+  RagAskLog: 'RagAskLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -169,6 +170,21 @@ export const DocumentChunkScalarFieldEnum = {
 export type DocumentChunkScalarFieldEnum = (typeof DocumentChunkScalarFieldEnum)[keyof typeof DocumentChunkScalarFieldEnum]
 
 
+export const RagAskLogScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  workspaceId: 'workspaceId',
+  askedByUserId: 'askedByUserId',
+  question: 'question',
+  answer: 'answer',
+  citations: 'citations',
+  retrievedChunks: 'retrievedChunks',
+  createdAt: 'createdAt'
+} as const
+
+export type RagAskLogScalarFieldEnum = (typeof RagAskLogScalarFieldEnum)[keyof typeof RagAskLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -183,6 +199,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

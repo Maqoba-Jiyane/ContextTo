@@ -225,6 +225,7 @@ export type WorkspaceWhereInput = {
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   parent?: Prisma.XOR<Prisma.WorkspaceNullableScalarRelationFilter, Prisma.WorkspaceWhereInput> | null
   children?: Prisma.WorkspaceListRelationFilter
+  ragAskLogs?: Prisma.RagAskLogListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   documents?: Prisma.DocumentListRelationFilter
 }
@@ -243,6 +244,7 @@ export type WorkspaceOrderByWithRelationInput = {
   organization?: Prisma.OrganizationOrderByWithRelationInput
   parent?: Prisma.WorkspaceOrderByWithRelationInput
   children?: Prisma.WorkspaceOrderByRelationAggregateInput
+  ragAskLogs?: Prisma.RagAskLogOrderByRelationAggregateInput
   createdBy?: Prisma.UserOrderByWithRelationInput
   documents?: Prisma.DocumentOrderByRelationAggregateInput
 }
@@ -265,6 +267,7 @@ export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   parent?: Prisma.XOR<Prisma.WorkspaceNullableScalarRelationFilter, Prisma.WorkspaceWhereInput> | null
   children?: Prisma.WorkspaceListRelationFilter
+  ragAskLogs?: Prisma.RagAskLogListRelationFilter
   createdBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   documents?: Prisma.DocumentListRelationFilter
 }, "id" | "organizationId_slug">
@@ -312,6 +315,7 @@ export type WorkspaceCreateInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutWorkspacesInput
   parent?: Prisma.WorkspaceCreateNestedOneWithoutChildrenInput
   children?: Prisma.WorkspaceCreateNestedManyWithoutParentInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutWorkspaceInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedWorkspacesInput
   documents?: Prisma.DocumentCreateNestedManyWithoutWorkspaceInput
 }
@@ -328,6 +332,7 @@ export type WorkspaceUncheckedCreateInput = {
   updatedAt?: Date | string
   archivedAt?: Date | string | null
   children?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutParentInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutWorkspaceInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
@@ -342,6 +347,7 @@ export type WorkspaceUpdateInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutWorkspacesNestedInput
   parent?: Prisma.WorkspaceUpdateOneWithoutChildrenNestedInput
   children?: Prisma.WorkspaceUpdateManyWithoutParentNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutWorkspaceNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedWorkspacesNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutWorkspaceNestedInput
 }
@@ -358,6 +364,7 @@ export type WorkspaceUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   children?: Prisma.WorkspaceUncheckedUpdateManyWithoutParentNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
@@ -614,6 +621,22 @@ export type WorkspaceUpdateOneWithoutDocumentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.WorkspaceUpdateToOneWithWhereWithoutDocumentsInput, Prisma.WorkspaceUpdateWithoutDocumentsInput>, Prisma.WorkspaceUncheckedUpdateWithoutDocumentsInput>
 }
 
+export type WorkspaceCreateNestedOneWithoutRagAskLogsInput = {
+  create?: Prisma.XOR<Prisma.WorkspaceCreateWithoutRagAskLogsInput, Prisma.WorkspaceUncheckedCreateWithoutRagAskLogsInput>
+  connectOrCreate?: Prisma.WorkspaceCreateOrConnectWithoutRagAskLogsInput
+  connect?: Prisma.WorkspaceWhereUniqueInput
+}
+
+export type WorkspaceUpdateOneWithoutRagAskLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.WorkspaceCreateWithoutRagAskLogsInput, Prisma.WorkspaceUncheckedCreateWithoutRagAskLogsInput>
+  connectOrCreate?: Prisma.WorkspaceCreateOrConnectWithoutRagAskLogsInput
+  upsert?: Prisma.WorkspaceUpsertWithoutRagAskLogsInput
+  disconnect?: Prisma.WorkspaceWhereInput | boolean
+  delete?: Prisma.WorkspaceWhereInput | boolean
+  connect?: Prisma.WorkspaceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WorkspaceUpdateToOneWithWhereWithoutRagAskLogsInput, Prisma.WorkspaceUpdateWithoutRagAskLogsInput>, Prisma.WorkspaceUncheckedUpdateWithoutRagAskLogsInput>
+}
+
 export type WorkspaceCreateWithoutCreatedByInput = {
   id?: string
   name: string
@@ -625,6 +648,7 @@ export type WorkspaceCreateWithoutCreatedByInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutWorkspacesInput
   parent?: Prisma.WorkspaceCreateNestedOneWithoutChildrenInput
   children?: Prisma.WorkspaceCreateNestedManyWithoutParentInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutWorkspaceInput
   documents?: Prisma.DocumentCreateNestedManyWithoutWorkspaceInput
 }
 
@@ -639,6 +663,7 @@ export type WorkspaceUncheckedCreateWithoutCreatedByInput = {
   updatedAt?: Date | string
   archivedAt?: Date | string | null
   children?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutParentInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutWorkspaceInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
@@ -694,6 +719,7 @@ export type WorkspaceCreateWithoutOrganizationInput = {
   archivedAt?: Date | string | null
   parent?: Prisma.WorkspaceCreateNestedOneWithoutChildrenInput
   children?: Prisma.WorkspaceCreateNestedManyWithoutParentInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutWorkspaceInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedWorkspacesInput
   documents?: Prisma.DocumentCreateNestedManyWithoutWorkspaceInput
 }
@@ -709,6 +735,7 @@ export type WorkspaceUncheckedCreateWithoutOrganizationInput = {
   updatedAt?: Date | string
   archivedAt?: Date | string | null
   children?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutParentInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutWorkspaceInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
@@ -748,6 +775,7 @@ export type WorkspaceCreateWithoutChildrenInput = {
   archivedAt?: Date | string | null
   organization: Prisma.OrganizationCreateNestedOneWithoutWorkspacesInput
   parent?: Prisma.WorkspaceCreateNestedOneWithoutChildrenInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutWorkspaceInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedWorkspacesInput
   documents?: Prisma.DocumentCreateNestedManyWithoutWorkspaceInput
 }
@@ -763,6 +791,7 @@ export type WorkspaceUncheckedCreateWithoutChildrenInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   archivedAt?: Date | string | null
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutWorkspaceInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
@@ -781,6 +810,7 @@ export type WorkspaceCreateWithoutParentInput = {
   archivedAt?: Date | string | null
   organization: Prisma.OrganizationCreateNestedOneWithoutWorkspacesInput
   children?: Prisma.WorkspaceCreateNestedManyWithoutParentInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutWorkspaceInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedWorkspacesInput
   documents?: Prisma.DocumentCreateNestedManyWithoutWorkspaceInput
 }
@@ -796,6 +826,7 @@ export type WorkspaceUncheckedCreateWithoutParentInput = {
   updatedAt?: Date | string
   archivedAt?: Date | string | null
   children?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutParentInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutWorkspaceInput
   documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
@@ -830,6 +861,7 @@ export type WorkspaceUpdateWithoutChildrenInput = {
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutWorkspacesNestedInput
   parent?: Prisma.WorkspaceUpdateOneWithoutChildrenNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutWorkspaceNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedWorkspacesNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutWorkspaceNestedInput
 }
@@ -845,6 +877,7 @@ export type WorkspaceUncheckedUpdateWithoutChildrenInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
@@ -875,6 +908,7 @@ export type WorkspaceCreateWithoutDocumentsInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutWorkspacesInput
   parent?: Prisma.WorkspaceCreateNestedOneWithoutChildrenInput
   children?: Prisma.WorkspaceCreateNestedManyWithoutParentInput
+  ragAskLogs?: Prisma.RagAskLogCreateNestedManyWithoutWorkspaceInput
   createdBy?: Prisma.UserCreateNestedOneWithoutCreatedWorkspacesInput
 }
 
@@ -890,6 +924,7 @@ export type WorkspaceUncheckedCreateWithoutDocumentsInput = {
   updatedAt?: Date | string
   archivedAt?: Date | string | null
   children?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutParentInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedCreateNestedManyWithoutWorkspaceInput
 }
 
 export type WorkspaceCreateOrConnectWithoutDocumentsInput = {
@@ -919,6 +954,7 @@ export type WorkspaceUpdateWithoutDocumentsInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutWorkspacesNestedInput
   parent?: Prisma.WorkspaceUpdateOneWithoutChildrenNestedInput
   children?: Prisma.WorkspaceUpdateManyWithoutParentNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutWorkspaceNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedWorkspacesNestedInput
 }
 
@@ -934,6 +970,83 @@ export type WorkspaceUncheckedUpdateWithoutDocumentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   children?: Prisma.WorkspaceUncheckedUpdateManyWithoutParentNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+}
+
+export type WorkspaceCreateWithoutRagAskLogsInput = {
+  id?: string
+  name: string
+  slug: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  archivedAt?: Date | string | null
+  organization: Prisma.OrganizationCreateNestedOneWithoutWorkspacesInput
+  parent?: Prisma.WorkspaceCreateNestedOneWithoutChildrenInput
+  children?: Prisma.WorkspaceCreateNestedManyWithoutParentInput
+  createdBy?: Prisma.UserCreateNestedOneWithoutCreatedWorkspacesInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutWorkspaceInput
+}
+
+export type WorkspaceUncheckedCreateWithoutRagAskLogsInput = {
+  id?: string
+  organizationId: string
+  parentId?: string | null
+  createdByUserId?: string | null
+  name: string
+  slug: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  archivedAt?: Date | string | null
+  children?: Prisma.WorkspaceUncheckedCreateNestedManyWithoutParentInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutWorkspaceInput
+}
+
+export type WorkspaceCreateOrConnectWithoutRagAskLogsInput = {
+  where: Prisma.WorkspaceWhereUniqueInput
+  create: Prisma.XOR<Prisma.WorkspaceCreateWithoutRagAskLogsInput, Prisma.WorkspaceUncheckedCreateWithoutRagAskLogsInput>
+}
+
+export type WorkspaceUpsertWithoutRagAskLogsInput = {
+  update: Prisma.XOR<Prisma.WorkspaceUpdateWithoutRagAskLogsInput, Prisma.WorkspaceUncheckedUpdateWithoutRagAskLogsInput>
+  create: Prisma.XOR<Prisma.WorkspaceCreateWithoutRagAskLogsInput, Prisma.WorkspaceUncheckedCreateWithoutRagAskLogsInput>
+  where?: Prisma.WorkspaceWhereInput
+}
+
+export type WorkspaceUpdateToOneWithWhereWithoutRagAskLogsInput = {
+  where?: Prisma.WorkspaceWhereInput
+  data: Prisma.XOR<Prisma.WorkspaceUpdateWithoutRagAskLogsInput, Prisma.WorkspaceUncheckedUpdateWithoutRagAskLogsInput>
+}
+
+export type WorkspaceUpdateWithoutRagAskLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  organization?: Prisma.OrganizationUpdateOneRequiredWithoutWorkspacesNestedInput
+  parent?: Prisma.WorkspaceUpdateOneWithoutChildrenNestedInput
+  children?: Prisma.WorkspaceUpdateManyWithoutParentNestedInput
+  createdBy?: Prisma.UserUpdateOneWithoutCreatedWorkspacesNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutWorkspaceNestedInput
+}
+
+export type WorkspaceUncheckedUpdateWithoutRagAskLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  children?: Prisma.WorkspaceUncheckedUpdateManyWithoutParentNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
 export type WorkspaceCreateManyCreatedByInput = {
@@ -959,6 +1072,7 @@ export type WorkspaceUpdateWithoutCreatedByInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutWorkspacesNestedInput
   parent?: Prisma.WorkspaceUpdateOneWithoutChildrenNestedInput
   children?: Prisma.WorkspaceUpdateManyWithoutParentNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutWorkspaceNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutWorkspaceNestedInput
 }
 
@@ -973,6 +1087,7 @@ export type WorkspaceUncheckedUpdateWithoutCreatedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   children?: Prisma.WorkspaceUncheckedUpdateManyWithoutParentNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
@@ -1010,6 +1125,7 @@ export type WorkspaceUpdateWithoutOrganizationInput = {
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   parent?: Prisma.WorkspaceUpdateOneWithoutChildrenNestedInput
   children?: Prisma.WorkspaceUpdateManyWithoutParentNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutWorkspaceNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedWorkspacesNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutWorkspaceNestedInput
 }
@@ -1025,6 +1141,7 @@ export type WorkspaceUncheckedUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   children?: Prisma.WorkspaceUncheckedUpdateManyWithoutParentNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
@@ -1062,6 +1179,7 @@ export type WorkspaceUpdateWithoutParentInput = {
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutWorkspacesNestedInput
   children?: Prisma.WorkspaceUpdateManyWithoutParentNestedInput
+  ragAskLogs?: Prisma.RagAskLogUpdateManyWithoutWorkspaceNestedInput
   createdBy?: Prisma.UserUpdateOneWithoutCreatedWorkspacesNestedInput
   documents?: Prisma.DocumentUpdateManyWithoutWorkspaceNestedInput
 }
@@ -1077,6 +1195,7 @@ export type WorkspaceUncheckedUpdateWithoutParentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   children?: Prisma.WorkspaceUncheckedUpdateManyWithoutParentNestedInput
+  ragAskLogs?: Prisma.RagAskLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   documents?: Prisma.DocumentUncheckedUpdateManyWithoutWorkspaceNestedInput
 }
 
@@ -1099,11 +1218,13 @@ export type WorkspaceUncheckedUpdateManyWithoutParentInput = {
 
 export type WorkspaceCountOutputType = {
   children: number
+  ragAskLogs: number
   documents: number
 }
 
 export type WorkspaceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   children?: boolean | WorkspaceCountOutputTypeCountChildrenArgs
+  ragAskLogs?: boolean | WorkspaceCountOutputTypeCountRagAskLogsArgs
   documents?: boolean | WorkspaceCountOutputTypeCountDocumentsArgs
 }
 
@@ -1122,6 +1243,13 @@ export type WorkspaceCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
  */
 export type WorkspaceCountOutputTypeCountChildrenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.WorkspaceWhereInput
+}
+
+/**
+ * WorkspaceCountOutputType without action
+ */
+export type WorkspaceCountOutputTypeCountRagAskLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RagAskLogWhereInput
 }
 
 /**
@@ -1146,6 +1274,7 @@ export type WorkspaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Workspace$parentArgs<ExtArgs>
   children?: boolean | Prisma.Workspace$childrenArgs<ExtArgs>
+  ragAskLogs?: boolean | Prisma.Workspace$ragAskLogsArgs<ExtArgs>
   createdBy?: boolean | Prisma.Workspace$createdByArgs<ExtArgs>
   documents?: boolean | Prisma.Workspace$documentsArgs<ExtArgs>
   _count?: boolean | Prisma.WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
@@ -1201,6 +1330,7 @@ export type WorkspaceInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   parent?: boolean | Prisma.Workspace$parentArgs<ExtArgs>
   children?: boolean | Prisma.Workspace$childrenArgs<ExtArgs>
+  ragAskLogs?: boolean | Prisma.Workspace$ragAskLogsArgs<ExtArgs>
   createdBy?: boolean | Prisma.Workspace$createdByArgs<ExtArgs>
   documents?: boolean | Prisma.Workspace$documentsArgs<ExtArgs>
   _count?: boolean | Prisma.WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
@@ -1222,6 +1352,7 @@ export type $WorkspacePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     organization: Prisma.$OrganizationPayload<ExtArgs>
     parent: Prisma.$WorkspacePayload<ExtArgs> | null
     children: Prisma.$WorkspacePayload<ExtArgs>[]
+    ragAskLogs: Prisma.$RagAskLogPayload<ExtArgs>[]
     createdBy: Prisma.$UserPayload<ExtArgs> | null
     documents: Prisma.$DocumentPayload<ExtArgs>[]
   }
@@ -1633,6 +1764,7 @@ export interface Prisma__WorkspaceClient<T, Null = never, ExtArgs extends runtim
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   parent<T extends Prisma.Workspace$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$parentArgs<ExtArgs>>): Prisma.Prisma__WorkspaceClient<runtime.Types.Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   children<T extends Prisma.Workspace$childrenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ragAskLogs<T extends Prisma.Workspace$ragAskLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$ragAskLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RagAskLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdBy<T extends Prisma.Workspace$createdByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$createdByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   documents<T extends Prisma.Workspace$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Workspace$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2115,6 +2247,30 @@ export type Workspace$childrenArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.WorkspaceScalarFieldEnum | Prisma.WorkspaceScalarFieldEnum[]
+}
+
+/**
+ * Workspace.ragAskLogs
+ */
+export type Workspace$ragAskLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RagAskLog
+   */
+  select?: Prisma.RagAskLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RagAskLog
+   */
+  omit?: Prisma.RagAskLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RagAskLogInclude<ExtArgs> | null
+  where?: Prisma.RagAskLogWhereInput
+  orderBy?: Prisma.RagAskLogOrderByWithRelationInput | Prisma.RagAskLogOrderByWithRelationInput[]
+  cursor?: Prisma.RagAskLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RagAskLogScalarFieldEnum | Prisma.RagAskLogScalarFieldEnum[]
 }
 
 /**

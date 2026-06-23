@@ -47,3 +47,8 @@ export type Document = Prisma.DocumentModel
  * 
  */
 export type DocumentChunk = Prisma.DocumentChunkModel
+/**
+ * Model RagAskLog
+ * 
+ */
+export type RagAskLog = Prisma.RagAskLogModel

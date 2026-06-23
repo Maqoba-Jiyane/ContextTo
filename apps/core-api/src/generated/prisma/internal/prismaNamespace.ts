@@ -389,7 +389,8 @@ export const ModelName = {
   OrganizationMember: 'OrganizationMember',
   Workspace: 'Workspace',
   Document: 'Document',
-  DocumentChunk: 'DocumentChunk'
+  DocumentChunk: 'DocumentChunk',
+  RagAskLog: 'RagAskLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "organization" | "organizationMember" | "workspace" | "document" | "documentChunk"
+    modelProps: "user" | "organization" | "organizationMember" | "workspace" | "document" | "documentChunk" | "ragAskLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +854,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RagAskLog: {
+      payload: Prisma.$RagAskLogPayload<ExtArgs>
+      fields: Prisma.RagAskLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RagAskLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RagAskLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RagAskLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RagAskLogPayload>
+        }
+        findFirst: {
+          args: Prisma.RagAskLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RagAskLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RagAskLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RagAskLogPayload>
+        }
+        findMany: {
+          args: Prisma.RagAskLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RagAskLogPayload>[]
+        }
+        create: {
+          args: Prisma.RagAskLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RagAskLogPayload>
+        }
+        createMany: {
+          args: Prisma.RagAskLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RagAskLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RagAskLogPayload>[]
+        }
+        delete: {
+          args: Prisma.RagAskLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RagAskLogPayload>
+        }
+        update: {
+          args: Prisma.RagAskLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RagAskLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.RagAskLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RagAskLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RagAskLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RagAskLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.RagAskLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RagAskLogPayload>
+        }
+        aggregate: {
+          args: Prisma.RagAskLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRagAskLog>
+        }
+        groupBy: {
+          args: Prisma.RagAskLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RagAskLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RagAskLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RagAskLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -986,6 +1061,21 @@ export const DocumentChunkScalarFieldEnum = {
 export type DocumentChunkScalarFieldEnum = (typeof DocumentChunkScalarFieldEnum)[keyof typeof DocumentChunkScalarFieldEnum]
 
 
+export const RagAskLogScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  workspaceId: 'workspaceId',
+  askedByUserId: 'askedByUserId',
+  question: 'question',
+  answer: 'answer',
+  citations: 'citations',
+  retrievedChunks: 'retrievedChunks',
+  createdAt: 'createdAt'
+} as const
+
+export type RagAskLogScalarFieldEnum = (typeof RagAskLogScalarFieldEnum)[keyof typeof RagAskLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1000,6 +1090,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1274,6 +1371,7 @@ export type GlobalOmitConfig = {
   workspace?: Prisma.WorkspaceOmit
   document?: Prisma.DocumentOmit
   documentChunk?: Prisma.DocumentChunkOmit
+  ragAskLog?: Prisma.RagAskLogOmit
 }
 
 /* Types for Logging */
