@@ -225,3 +225,8 @@ NEXT_PUBLIC_DEMO_WORKSPACE_ID=
 * [ ] **Workspace Security**: Apply fine-grained RBAC access control across directories.
 * [ ] **Cloud Storage Integration**: Move from local filesystem disk writes to AWS S3/Cloudflare R2 blocks.
 * [ ] **System Observability**: Standardize structural logging outputs and platform observability metrics.
+
+## ⚡ Recent Activity
+
+<!--START_SECTION:activity-->
+<!--END_SECTION:activity-->
