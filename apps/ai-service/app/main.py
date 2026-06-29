@@ -13,6 +13,9 @@ from pydantic import BaseModel, Field
 from pypdf import PdfReader
 from sentence_transformers import SentenceTransformer
 
+import os
+import httpx
+
 
 app = FastAPI(
     title="Contexto AI Service",
@@ -85,6 +88,103 @@ class AnswerResponse(BaseModel):
     answer: str
     citations: list[AnswerCitation]
     
+async def generate_llm_answer(query: str, contexts: list[AnswerContext]) -> str:
+    api_key = os.getenv("LLM_API_KEY")
+    base_url = os.getenv("LLM_BASE_URL")
+    model = os.getenv("LLM_MODEL")
+    timeout_seconds = int(os.getenv("LLM_TIMEOUT_SECONDS", "60"))
+
+    if not api_key or not base_url or not model:
+        raise HTTPException(
+            status_code=500,
+            detail="LLM is not configured. Set LLM_API_KEY, LLM_BASE_URL, and LLM_MODEL.",
+        )
+
+    context_blocks: list[str] = []
+
+    for index, context in enumerate(contexts, start=1):
+        context_blocks.append(
+            f"""
+SOURCE {index}
+File: {context.originalFileName}
+Chunk: {context.chunkIndex}
+Score: {context.score}
+
+{context.content}
+""".strip()
+        )
+
+    context_text = "\n\n---\n\n".join(context_blocks)
+
+    system_prompt = """
+You are an AI assistant for a business knowledge-base platform.
+
+Answer the user's question using ONLY the provided source context.
+
+Rules:
+- Give a clear, natural answer.
+- Structure the answer with short paragraphs and bullet points where useful.
+- Do not invent information.
+- If the answer is not found in the sources, say: "I could not find that information in the uploaded documents."
+- Do not mention internal chunk IDs.
+- Do not say "based on the context" repeatedly.
+- Keep the answer professional and easy to read.
+""".strip()
+
+    user_prompt = f"""
+Question:
+{query}
+
+Source context:
+{context_text}
+
+Write the best possible answer using only the source context.
+""".strip()
+
+    payload = {
+        "model": model,
+        "messages": [
+            {
+                "role": "system",
+                "content": system_prompt,
+            },
+            {
+                "role": "user",
+                "content": user_prompt,
+            },
+        ],
+        "temperature": 0.2,
+        "max_tokens": 900,
+    }
+
+    async with httpx.AsyncClient(timeout=timeout_seconds) as client:
+        response = await client.post(
+            f"{base_url.rstrip('/')}/chat/completions",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            json=payload,
+        )
+
+    if response.status_code >= 400:
+        raise HTTPException(
+            status_code=502,
+            detail=f"LLM provider failed with status {response.status_code}: {response.text}",
+        )
+
+    data = response.json()
+
+    try:
+        answer = data["choices"][0]["message"]["content"]
+    except (KeyError, IndexError, TypeError):
+        raise HTTPException(
+            status_code=502,
+            detail="LLM provider returned an invalid response shape.",
+        )
+
+    return answer.strip()
+    
 @app.post("/answer", response_model=AnswerResponse)
 async def answer_question(payload: AnswerRequest) -> AnswerResponse:
     query = payload.query.strip()
@@ -100,78 +200,25 @@ async def answer_question(payload: AnswerRequest) -> AnswerResponse:
 
     selected_contexts = payload.contexts[:5]
 
-    sentences: list[tuple[str, AnswerContext]] = []
-
-    for context in selected_contexts:
-        for sentence in split_into_sentences(context.content):
-            cleaned = sentence.strip()
-
-            if len(cleaned.split()) >= 8:
-                sentences.append((cleaned, context))
-
-    if not sentences:
-        return AnswerResponse(
-            answer="I found relevant document chunks, but could not extract a clear answer from them.",
-            citations=[
-                AnswerCitation(
-                    chunkId=context.chunkId,
-                    documentId=context.documentId,
-                    originalFileName=context.originalFileName,
-                    chunkIndex=context.chunkIndex,
-                    score=context.score,
-                )
-                for context in selected_contexts[:3]
-            ],
-        )
-
-    query_embedding = embedding_model.encode(
-        query,
-        normalize_embeddings=True,
-        show_progress_bar=False,
+    answer = await generate_llm_answer(
+        query=query,
+        contexts=selected_contexts,
     )
 
-    sentence_texts = [sentence for sentence, _context in sentences]
-
-    sentence_embeddings = embedding_model.encode(
-        sentence_texts,
-        normalize_embeddings=True,
-        show_progress_bar=False,
-    )
-
-    scored_sentences: list[tuple[float, str, AnswerContext]] = []
-
-    for sentence, context, sentence_embedding in zip(
-        sentence_texts,
-        [context for _sentence, context in sentences],
-        sentence_embeddings,
-    ):
-        similarity = float(query_embedding @ sentence_embedding)
-        scored_sentences.append((similarity, sentence, context))
-
-    scored_sentences.sort(key=lambda item: item[0], reverse=True)
-
-    top_sentences = scored_sentences[:4]
-
-    answer_lines = [
-        sentence for _similarity, sentence, _context in top_sentences
-    ]
-
-    unique_citations: dict[str, AnswerCitation] = {}
-
-    for _similarity, _sentence, context in top_sentences:
-        unique_citations[context.chunkId] = AnswerCitation(
+    citations = [
+        AnswerCitation(
             chunkId=context.chunkId,
             documentId=context.documentId,
             originalFileName=context.originalFileName,
             chunkIndex=context.chunkIndex,
             score=context.score,
         )
-
-    answer = " ".join(answer_lines)
+        for context in selected_contexts
+    ]
 
     return AnswerResponse(
         answer=answer,
-        citations=list(unique_citations.values()),
+        citations=citations,
     )
     
 @app.post("/embed/query", response_model=EmbedQueryResponse)
