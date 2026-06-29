@@ -30,4 +30,8 @@ export class SemanticSearchDto {
   @Min(1)
   @Max(20)
   limit = 5;
+
+  @IsOptional()
+  @IsUUID('4')
+  documentId?: string;
 }

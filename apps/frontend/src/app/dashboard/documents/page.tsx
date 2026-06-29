@@ -12,7 +12,7 @@ const demoWorkspaceId = process.env.NEXT_PUBLIC_DEMO_WORKSPACE_ID;
 export default function DocumentsPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [documents, setDocuments] = useState<DocumentListItem[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -83,7 +83,42 @@ export default function DocumentsPage() {
   }
 
   useEffect(() => {
-    void fetchDocuments();
+    let isCancelled = false;
+
+    async function loadInitialDocuments(): Promise<void> {
+      if (!demoUserId || !demoOrganizationId) {
+        if (!isCancelled) {
+          setIsLoading(false);
+        }
+
+        return;
+      }
+
+      try {
+        const response = await listDocuments({
+          userId: demoUserId,
+          organizationId: demoOrganizationId,
+        });
+
+        if (!isCancelled) {
+          setDocuments(response.data);
+        }
+      } catch (error) {
+        if (!isCancelled) {
+          setErrorMessage(getErrorMessage(error));
+        }
+      } finally {
+        if (!isCancelled) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    void loadInitialDocuments();
+
+    return () => {
+      isCancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -240,6 +275,15 @@ export default function DocumentsPage() {
                         className="mt-2 block text-xs font-medium text-emerald-400 hover:text-emerald-300"
                       >
                         View extracted chunks
+                      </Link>
+
+                      <Link
+                        href={`/dashboard/ask?documentId=${document.id}&fileName=${encodeURIComponent(
+                          document.originalFileName,
+                        )}`}
+                        className="mt-2 block text-xs font-medium text-purple-400 hover:text-purple-300"
+                      >
+                        Ask this document
                       </Link>
 
                       {document.ingestionError && (

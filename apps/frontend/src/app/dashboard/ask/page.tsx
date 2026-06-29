@@ -4,6 +4,7 @@ import Link from "next/link";
 import { askQuestion, listRagHistory } from "@/lib/rag/api";
 import { RagAnswerResponse, RagHistoryItem } from "@/lib/rag/types";
 import { FormEvent, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 const demoUserId = process.env.NEXT_PUBLIC_DEMO_USER_ID;
 const demoOrganizationId = process.env.NEXT_PUBLIC_DEMO_ORGANIZATION_ID;
@@ -20,8 +21,19 @@ export default function AskPage() {
   const [history, setHistory] = useState<RagHistoryItem[]>([]);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
 
+  const searchParams = useSearchParams();
+
+  const scopedDocumentId = searchParams.get("documentId");
+  const scopedFileName = searchParams.get("fileName");
+
   useEffect(() => {
-    void loadHistory();
+    const timeoutId = window.setTimeout(() => {
+      void loadHistory();
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
   }, []);
 
   async function loadHistory() {
@@ -70,6 +82,7 @@ export default function AskPage() {
         payload: {
           organizationId: demoOrganizationId,
           workspaceId: demoWorkspaceId || undefined,
+          documentId: scopedDocumentId || undefined,
           question,
           limit,
         },
@@ -105,6 +118,13 @@ export default function AskPage() {
             Ask a question against uploaded documents. The system retrieves
             relevant chunks and returns an answer with source citations.
           </p>
+
+          {scopedDocumentId && (
+            <div className="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-200">
+              Asking only this document
+              {scopedFileName ? `: ${scopedFileName}` : "."}
+            </div>
+          )}
         </section>
 
         {errorMessage && (

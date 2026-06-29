@@ -138,6 +138,7 @@ export class RagService {
       {
         organizationId: payload.organizationId,
         workspaceId: payload.workspaceId,
+        documentId: payload.documentId,
         query: payload.question,
         limit: payload.limit,
       },

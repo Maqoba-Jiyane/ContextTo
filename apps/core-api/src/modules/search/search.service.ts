@@ -53,6 +53,36 @@ export interface SemanticSearchResponse {
 
 @Injectable()
 export class SearchService {
+  private async searchWithinDocument(params: {
+    organizationId: string;
+    documentId: string;
+    vectorLiteral: string;
+    limit: number;
+  }): Promise<SemanticSearchRawRow[]> {
+    return this.prisma.$queryRaw<SemanticSearchRawRow[]>`
+    SELECT
+      dc."id"::text AS "chunkId",
+      dc."document_id"::text AS "documentId",
+      dc."organization_id"::text AS "organizationId",
+      d."workspace_id"::text AS "workspaceId",
+      d."original_file_name" AS "originalFileName",
+      dc."chunk_index" AS "chunkIndex",
+      dc."content",
+      dc."token_count" AS "tokenCount",
+      (dc."embedding" <=> ${params.vectorLiteral}::vector) AS "cosineDistance",
+      (1 - (dc."embedding" <=> ${params.vectorLiteral}::vector)) AS "score"
+    FROM "document_chunks" dc
+    INNER JOIN "documents" d
+      ON d."id" = dc."document_id"
+    WHERE dc."organization_id" = ${params.organizationId}::uuid
+      AND dc."document_id" = ${params.documentId}::uuid
+      AND dc."embedding" IS NOT NULL
+      AND d."deleted_at" IS NULL
+    ORDER BY dc."embedding" <=> ${params.vectorLiteral}::vector
+    LIMIT ${params.limit};
+  `;
+  }
+
   private readonly logger = new Logger(SearchService.name);
 
   constructor(
@@ -72,18 +102,25 @@ export class SearchService {
     const embedding = await this.embedQuery(payload.query);
     const vectorLiteral = this.toPgVector(embedding);
 
-    const rows = payload.workspaceId
-      ? await this.searchWithinWorkspace({
+    const rows = payload.documentId
+      ? await this.searchWithinDocument({
           organizationId: payload.organizationId,
-          workspaceId: payload.workspaceId,
+          documentId: payload.documentId,
           vectorLiteral,
           limit: payload.limit,
         })
-      : await this.searchWithinOrganization({
-          organizationId: payload.organizationId,
-          vectorLiteral,
-          limit: payload.limit,
-        });
+      : payload.workspaceId
+        ? await this.searchWithinWorkspace({
+            organizationId: payload.organizationId,
+            workspaceId: payload.workspaceId,
+            vectorLiteral,
+            limit: payload.limit,
+          })
+        : await this.searchWithinOrganization({
+            organizationId: payload.organizationId,
+            vectorLiteral,
+            limit: payload.limit,
+          });
 
     return {
       query: payload.query,
@@ -162,7 +199,8 @@ export class SearchService {
   }
 
   private async embedQuery(query: string): Promise<number[]> {
-    const aiServiceUrl = this.configService.getOrThrow<string>('AI_SERVICE_URL');
+    const aiServiceUrl =
+      this.configService.getOrThrow<string>('AI_SERVICE_URL');
 
     let response: Response;
 
@@ -175,7 +213,9 @@ export class SearchService {
         body: JSON.stringify({ query }),
       });
     } catch (error) {
-      this.logger.error(`Failed to reach AI service: ${this.getErrorMessage(error)}`);
+      this.logger.error(
+        `Failed to reach AI service: ${this.getErrorMessage(error)}`,
+      );
 
       throw new ServiceUnavailableException(
         'AI service is unavailable. Could not embed query.',

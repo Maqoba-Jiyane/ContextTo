@@ -42,7 +42,13 @@ export default function DocumentChunksPage() {
   }
 
   useEffect(() => {
-    void fetchChunks();
+    const timeoutId = window.setTimeout(() => {
+      void fetchChunks();
+    }, 0);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
   }, [documentId]);
 
   return (
@@ -56,18 +62,29 @@ export default function DocumentChunksPage() {
             ← Back to documents
           </Link>
 
-          <h1 className="mt-4 text-3xl font-bold tracking-tight">
-            Extracted Chunks
-          </h1>
+          <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight">
+                Extracted Chunks
+              </h1>
 
-          <p className="mt-2 max-w-2xl text-sm text-slate-400">
-            Preview the text chunks extracted from this document before adding
-            embeddings and semantic search.
-          </p>
+              <p className="mt-2 max-w-2xl text-sm text-slate-400">
+                Preview the text chunks extracted from this document before
+                asking questions against it.
+              </p>
 
-          <p className="mt-2 break-all text-xs text-slate-500">
-            Document ID: {documentId}
-          </p>
+              <p className="mt-2 break-all text-xs text-slate-500">
+                Document ID: {documentId}
+              </p>
+            </div>
+
+            <Link
+              href={`/dashboard/ask?documentId=${documentId}`}
+              className="inline-block rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-500"
+            >
+              Ask this document
+            </Link>
+          </div>
         </section>
 
         {errorMessage && (

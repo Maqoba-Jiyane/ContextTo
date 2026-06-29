@@ -30,4 +30,8 @@ export class AskQuestionDto {
   @Min(1)
   @Max(10)
   limit = 5;
+
+  @IsOptional()
+  @IsUUID('4')
+  documentId?: string;
 }
